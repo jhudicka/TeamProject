@@ -4,22 +4,25 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Homepage of MBTA Helper</title>
+    <title>Homepage of FACEIT Helper</title>
     <style>
-    h2 {
+      h1 {
         padding: 30px;
         text-align: center;
-        background-color: #165c96;
+        background-color: #cd5a12;
         color: #fff;
+      }
+      label {
+        font-size: 1.2rem;
       }
       button {
         border-color: black;
         padding: 2px 5px;
         text-align: center;
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         cursor: pointer;
         border-radius: 1px;
-        background-color: #165c96;
+        background-color: #cd5a12;
         color: #fff;
         margin-top: 10px;
         align-self: center;
@@ -30,12 +33,14 @@
         align-items: center;
         margin-top: 20px;
       }
-        </style>
+    </style>
   </head>
-<body>
-    <h2>Click to use the CS:GO Tracker app!</h1>
-    <form action="/station" method="get">
-        <button type="submit">Go to CS:GO Tracker</button>
+  <body>
+    <h1>Click to use the FACEIT Helper app!</h1>
+    <form action="/name/" method="post">
+      <label for="nickname">Please enter your FACEIT name:</label>
+      <input type="text" id="nickname" name="nickname" required />
+      <button type="submit">Find Your Stats</button>
     </form>
-</body>
+  </body>
 </html>
