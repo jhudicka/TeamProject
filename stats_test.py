@@ -15,25 +15,28 @@ def search_player(nickname):
         data = response.json()
         # Process the data as needed
         selected_player = choose_player(data)
-        if selected_player:
-            nickname, player_id = selected_player
-            print(f"Selected player: {nickname} (Player ID: {player_id})")
-            limit = int(
-                input(
-                    "Enter the number of match statistics you would like to see (e.g., Last 5 Matches): "
-                )
-            )
-            matches_data = player_stats(player_id, limit)
-            if matches_data:
-                match_stats(matches_data)
-                choose_match(matches_data)
-            else:
-                print("No match statistics found.")
-        else:
-            print("No player selected.")
+        return selected_player
     else:
         print(f"Error: {response.status_code}, {response.text}")
 
+def process_selected_player(selected_player):
+    if selected_player:
+        nickname, player_id = selected_player
+        print(f"Selected player: {nickname} (Player ID: {player_id})")
+        limit = int(input("Enter the number of match statistics you would like to see (e.g., Last 5 Matches): "))
+        matches_data = player_stats(player_id, limit)
+        if matches_data:
+            match_stats_data = match_stats(matches_data)
+            return {
+                "nickname": nickname,
+                "player_id": player_id,
+                "matches_data": match_stats_data
+            }
+        else:
+            print("No match statistics found.")
+    else:
+        print("No player selected.")
+        return None
 
 def choose_player(data):
     items = data.get("items", [])
@@ -83,7 +86,7 @@ def match_stats(data):
 
     if not matches:
         print("No match statistics found.")
-        return
+        return matches_data
 
     headers = [
         "Map",
@@ -113,7 +116,6 @@ def match_stats(data):
 
         matches_data.append(
             [
-                index,
                 cs_map,
                 result,
                 score,
@@ -125,9 +127,7 @@ def match_stats(data):
             ]
         )
 
-    print(
-        tabulate(matches_data, headers=headers, tablefmt="fancy_grid", stralign="right")
-    )
+    return {"headers": headers, "matches_data": matches_data}
 
 
 def lobby_stats(match_id):
@@ -235,8 +235,9 @@ def main():
     """
     Runs the function search_player()
     """
-    nickname = "s1mple"
-    search_player(nickname)
+    nickname = input("Enter a username: ")
+    selected_player = search_player(nickname)
+    process_selected_player(selected_player)
 
 
 if __name__ == "__main__":

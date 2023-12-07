@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, session
 
 from stats_test import (
     search_player,
+    process_selected_player,
     choose_player,
     player_stats,
     match_stats,
@@ -25,7 +26,7 @@ def find_name():
         search_player(nickname)
 
         # You might want to add the selected nickname to your nicknames_list here
-        nicknames_list.append(nickname)
+        # nicknames_list.append(nickname)
 
         # Redirect to the display page
         return redirect("/display_nicknames")
@@ -36,6 +37,7 @@ def find_name():
 @app.route("/display_nicknames")
 def display_nicknames():
     return render_template("names.html", nicknames=nicknames_list)
+
 
 
 if __name__ == "__main__":
