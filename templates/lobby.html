@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lobby Statistics</title>
+</head>
+<body>
+    <h1>Lobby Stats</h1>
+    <table border="1">
+        <tr>
+            <th>Player Name</th>
+            <th>Player Stats</th>
+        </tr>
+        {% for nickname_data in nicknames %}
+            <tr>
+                <td>{{ nickname_data['nickname'] }}</td>
+                <!-- <td>{{ nickname_data['player_id'] }}</td> -->
+                <td>
+                    <table border="1">
+                        <tr>
+                            {% for header in nickname_data['matches_data']['headers'] %}
+                                <th>{{ header }}</th>
+                            {% endfor %}
+                        </tr>
+                        {% for match_data in nickname_data['matches_data']['matches_data'] %}
+                            <tr>
+                                {% for item in match_data %}
+                                    <td>{{ item }}</td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

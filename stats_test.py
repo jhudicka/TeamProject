@@ -14,7 +14,8 @@ def search_player(nickname):
     if response.status_code == 200:
         data = response.json()
         # Process the data as needed
-        selected_player = choose_player(data)
+        choose_player(data)
+        selected_player = player_choice(data)
         return selected_player
     else:
         print(f"Error: {response.status_code}, {response.text}")
@@ -44,12 +45,23 @@ def choose_player(data):
         print("No players found.")
         return None
 
-    items = data.get("items", [])
+    players_data = []
     for index, player in enumerate(items, start=1):
+        if not isinstance(player, dict):
+            print(f"Error: Player at index {index} is not a dictionary.")
+            continue
+
         nickname = player.get("nickname", "N/A")
         player_id = player.get("player_id", "N/A")
-        print(f"{index}. {nickname} (Player ID: {player_id})")
+        players_data.append({"index": index, "nickname": nickname, "player_id": player_id})
+    return players_data
 
+
+
+
+
+def player_choice(data):
+    items = data.get("items", [])
     while True:
         try:
             choice = int(input("Choose a player number (1-{}): ".format(len(items))))
