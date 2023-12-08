@@ -20,24 +20,30 @@ def search_player(nickname):
     else:
         print(f"Error: {response.status_code}, {response.text}")
 
+
 def process_selected_player(selected_player):
     if selected_player:
         nickname, player_id = selected_player
         print(f"Selected player: {nickname} (Player ID: {player_id})")
-        limit = int(input("Enter the number of match statistics you would like to see (e.g., Last 5 Matches): "))
+        limit = int(
+            input(
+                "Enter the number of match statistics you would like to see (e.g., Last 5 Matches): "
+            )
+        )
         matches_data = player_stats(player_id, limit)
         if matches_data:
             match_stats_data = match_stats(matches_data)
             return {
                 "nickname": nickname,
                 "player_id": player_id,
-                "matches_data": match_stats_data
+                "matches_data": match_stats_data,
             }
         else:
             print("No match statistics found.")
     else:
         print("No player selected.")
         return None
+
 
 def choose_player(data):
     items = data.get("items", [])
@@ -53,11 +59,10 @@ def choose_player(data):
 
         nickname = player.get("nickname", "N/A")
         player_id = player.get("player_id", "N/A")
-        players_data.append({"index": index, "nickname": nickname, "player_id": player_id})
+        players_data.append(
+            {"index": index, "nickname": nickname, "player_id": player_id}
+        )
     return players_data
-
-
-
 
 
 def player_choice(data):
@@ -249,7 +254,7 @@ def main():
     """
     nickname = input("Enter a username: ")
     selected_player = search_player(nickname)
-    process_selected_player(selected_player)
+    print(process_selected_player(selected_player))
 
 
 if __name__ == "__main__":

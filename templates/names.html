@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Players</title>
     <style>
       h1 {
@@ -11,7 +11,7 @@
         background-color: #cd5a12;
         color: white;
       }
-      .center{
+      .center {
         font-size: 1.1rem;
         text-align: center;
         width: auto;
@@ -30,32 +30,37 @@
         margin-left: auto;
       }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Player List</h1>
     <table border="1">
-        <tr>
-            <th>Nickname</th>
-            <th>Player ID</th>
+      <tr>
+        <th>Nickname</th>
+        <th>Player ID</th>
         {% for player_data in players_data %}
-            <tr>
-                <td>{{ player_data['nickname'] }}</td>
-                <td>{{ player_data['player_id'] }}</td>
-            </tr>
-        {% endfor %}
+      </tr>
+
+      <tr>
+        <td>{{ player_data['nickname'] }}</td>
+        <td>{{ player_data['player_id'] }}</td>
+      </tr>
+      {% endfor %}
     </table>
     <div class="center">
-      <form action="/player_stats" method="post">
+      <form action="/stats" method="post">
         <label for="player">Select Your Username:</label>
         <select id="player" name="player">
           {% for player in players %}
-            <option value="{{ player['player_id'] }}">
-              {{ player['nickname'] }}
-            </option>
+          <option value="{{ player['player_id'] }}">
+            {{ player['nickname'] }}
+          </option>
           {% endfor %}
         </select>
         <button type="submit">See Your Past Matches</button>
-    </form>
-  </div>
-</body>
+      </form>
+      <form action="/" method="get">
+        <button type="submit">Go Back</button>
+      </form>
+    </div>
+  </body>
 </html>
