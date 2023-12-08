@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Players</title>
+    <title>Player's Last Matches</title>
     <style>
       h1 {
         padding: 30px;
@@ -39,20 +39,20 @@
         <th>Player ID</th>
         <th>Matches Data</th>
       </tr>
-      {% for player_data in players_data %}
+      {% for match_item in matches_data %}
       <tr>
-        <td>{{ player_data['nickname'] }}</td>
-        <td>{{ player_data['player_id'] }}</td>
+        <td>{{ match_item['nickname'] }}</td>
+        <td>{{ match_item['player_id'] }}</td>
         <td>
           <table border="1">
             <tr>
-              {% for header in player_data['matches_data']['headers'] %}
+              {% for header in match_item['matches_data']['matches_data'] %}
               <th>{{ header }}</th>
               {% endfor %}
             </tr>
-            {% for match_data in player_data['matches_data']['matches_data'] %}
+            {% for match_data in match_item['matches_data']['matches_data'] %}
             <tr>
-              {% for item in match_data %}
+              {% for item in match_item %}
               <td>{{ item }}</td>
               {% endfor %}
             </tr>
@@ -63,8 +63,8 @@
       {% endfor %}
     </table>
     <div class="center">
-      <form action="/nicknames" method="post">
-        <button type="submit">Go Back</button>
+      <form action="/" method="get">
+        <button type="submit">Search Another Player</button>
       </form>
     </div>
   </body>
