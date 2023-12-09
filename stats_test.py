@@ -24,13 +24,14 @@ def search_player(nickname):
 def process_selected_player(selected_player):
     if selected_player:
         nickname, player_id = selected_player
-        print(f"Selected player: {nickname} (Player ID: {player_id})")
+        # print(f"Selected player: {nickname} (Player ID: {player_id})")
         limit = int(
             input(
                 "Enter the number of match statistics you would like to see (e.g., Last 5 Matches): "
             )
         )
         matches_data = player_stats(player_id, limit)
+        print(f"Raw matches data: {matches_data}")
         if matches_data:
             match_stats_data = match_stats(matches_data)
             return {
@@ -143,7 +144,7 @@ def match_stats(data):
                 f"{headshot_perc}%",
             ]
         )
-
+    # print(matches_data)
     return {"headers": headers, "matches_data": matches_data}
 
 

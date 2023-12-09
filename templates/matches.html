@@ -33,6 +33,7 @@
   </head>
   <body>
     <h1>Player List</h1>
+    <!-- ... (other parts of your HTML) ... -->
     <table border="1">
       <tr>
         <th>Nickname</th>
@@ -41,18 +42,19 @@
       </tr>
       {% for match_item in matches_data %}
       <tr>
-        <td>{{ match_item['nickname'] }}</td>
-        <td>{{ match_item['player_id'] }}</td>
+        <td>{{ match_item[0] }}</td>
+        <td>{{ match_item[1] }}</td>
         <td>
           <table border="1">
             <tr>
-              {% for header in match_item['matches_data']['matches_data'] %}
+              <!-- Assuming match_item[2] is the headers list -->
+              {% for header in match_item[2] %}
               <th>{{ header }}</th>
               {% endfor %}
             </tr>
-            {% for match_data in match_item['matches_data']['matches_data'] %}
+            {% for match_data in match_item[3] %}
             <tr>
-              {% for item in match_item %}
+              {% for item in match_data %}
               <td>{{ item }}</td>
               {% endfor %}
             </tr>
@@ -62,6 +64,7 @@
       </tr>
       {% endfor %}
     </table>
+      <!-- ... (other parts of your HTML) ... -->
     <div class="center">
       <form action="/" method="get">
         <button type="submit">Search Another Player</button>
