@@ -1,12 +1,11 @@
 from flask import Flask, render_template, request, redirect, session
 
-from stats_test import (
+from stats import (
     search_player,
     process_selected_player,
     choose_player,
     player_stats,
     match_stats,
-    lobby_stats,
     requests,
     FACEIT_KEY,
 )
