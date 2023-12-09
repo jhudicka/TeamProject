@@ -1,5 +1,5 @@
-# Faceit CS2 Match Statistic Project
-### Team members: Joey Hudicka and Ronald Liu Jr
+# FaceIt CS2 Match Statistics Project
+#### Team members: Joey Hudicka and Ronald Liu Jr
 
 ## Project Overview
 Our project idea is to create a per-user Counter-Strike 2 analysis tool that takes the input of a user’s FACEIT nickname and outputs a comprehensive analysis of their last 10 matches. The user would be able to see an overview of how their last 10 matches went – allowing the user to be able to analyze a particular game and see how they performed in a given match. Looking at match data within the FACEIT app itself can be difficult at times - with long loading times and statistics being buried at the bottom of each user's profile. With this project, it is meant to help make the process at looking at your previous matches much faster and easier!
