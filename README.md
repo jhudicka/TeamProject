@@ -1,5 +1,5 @@
 # FaceIt CS2 Match Statistic Project
-### Team members: Joey Hudicka and Ronald Liu Jr
+#### Team members: Joey Hudicka and Ronald Liu Jr
 
 ## Project Overview
 Our project idea is to create a per-user Counter-Strike 2 analysis tool that takes the input of a user’s SteamID and outputs a comprehensive analysis of their last 10 matches. The user would be able to see an overview of how their last 10 matches went – from what their most played map was, to what their most used weapon was, to their average headshot percentage. From there, users would be able to analyze a particular game and see the stats of themselves. Looking at match data within the Faceit app can be difficult at times - with long loading times and statistics being buried at the bottom of each user's profile - this project is meant to make the process at looking at your previous matches faster and easier!
