@@ -4,6 +4,9 @@ import requests
 
 
 def search_player(nickname):
+    """
+    Connects to the FACEIT API, searches for player by nickname based on a user's input.
+    """
     # nickname = input("Search for a nickname: ")
     url = f"https://open.faceit.com/data/v4/search/players?nickname={nickname}&offset=0&limit=20"
     headers = {"accept": "application/json", "Authorization": f"Bearer {FACEIT_KEY}"}
@@ -22,6 +25,9 @@ def search_player(nickname):
 
 
 def process_selected_player(selected_player):
+    """
+    Displays the nickname and player id based on the input of the user into the function search_player(). If the input has valid nicknames, after it the correct nickname is picked, the user can pick how many of their last match statistics they want to see.
+    """
     if selected_player:
         nickname, player_id = selected_player
         # print(f"Selected player: {nickname} (Player ID: {player_id})")
@@ -47,6 +53,9 @@ def process_selected_player(selected_player):
 
 
 def choose_player(data):
+    """
+    Extracts the player data from the process_selected_player function and formats it into a list, outputting the player's nickname and player_id.
+    """
     items = data.get("items", [])
     if not items:
         print("No players found.")
@@ -67,6 +76,9 @@ def choose_player(data):
 
 
 def player_choice(data):
+    """
+    After all of the similar nicknames (e.g. "s1mple" vs "s1mple--" vs "-s1mple-") are outputted, the user can select the exact nickname they are searching for.
+    """
     items = data.get("items", [])
     while True:
         try:
@@ -83,6 +95,9 @@ def player_choice(data):
 
 
 def player_stats(player_id, limit):
+    """
+    Based off of the players unique ID, the function connects back to the FACEIT API, this time pulling that player's stats.
+    """
     url = f"https://open.faceit.com/data/v4/players/{player_id}/games/cs2/stats"
     headers = {"accept": "application/json", "Authorization": f"Bearer {FACEIT_KEY}"}
     params = {"offset": 0, "limit": limit}
@@ -99,6 +114,9 @@ def player_stats(player_id, limit):
 
 
 def match_stats(data):
+    """
+    Using the url in player_stats, this function pulls the desired information from a player's match history, such as day played, map, result, score, etc.
+    """
     matches = data.get("items", [])
     matches_data = []
 
@@ -156,105 +174,112 @@ def match_stats(data):
     return {"headers": headers, "matches_data": matches_data}
 
 
-def lobby_stats(match_id):
-    url = f"https://open.faceit.com/data/v4/matches/{match_id}/stats"
-    headers = {"accept": "application/json", "Authorization": f"Bearer {FACEIT_KEY}"}
+### DID NOT USE
+# def lobby_stats(match_id):
+# """
+# Connects to FACEIT API, pulling the entire lobbies stats for a particular match that was played. Outputs similar table to the match_stats function, but just showing the stats of all the players from one match, rather than one player's stats from the last 10 matches.
+# """
+#     url = f"https://open.faceit.com/data/v4/matches/{match_id}/stats"
+#     headers = {"accept": "application/json", "Authorization": f"Bearer {FACEIT_KEY}"}
 
-    response = requests.get(url, headers=headers)
+#     response = requests.get(url, headers=headers)
 
-    if response.status_code == 200:
-        data = response.json()
-        cs_map = (
-            data.get("rounds", [])[0]
-            .get("round_stats", {})
-            .get("Map", "N/A")[3:]
-            .capitalize()
-        )
-        score = data.get("rounds", [])[0].get("round_stats", {}).get("Score", "N/A")
+#     if response.status_code == 200:
+#         data = response.json()
+#         cs_map = (
+#             data.get("rounds", [])[0]
+#             .get("round_stats", {})
+#             .get("Map", "N/A")[3:]
+#             .capitalize()
+#         )
+#         score = data.get("rounds", [])[0].get("round_stats", {}).get("Score", "N/A")
 
-        print(f"Map: {cs_map} | Score: {score}")
+#         print(f"Map: {cs_map} | Score: {score}")
 
-        rounds = data.get("rounds", [])
+#         rounds = data.get("rounds", [])
 
-        for round_info in rounds:
-            teams = round_info.get("teams", [])
+#         for round_info in rounds:
+#             teams = round_info.get("teams", [])
 
-            for team in teams:
-                team_name = team.get("team_stats", {}).get("Team", "N/A")
-                team_score = team.get("team_stats", {}).get("Final Score", "N/A")
-                team_result = (
-                    "Win"
-                    if team.get("team_stats", {}).get("Team Win", "0") == "1"
-                    else "Loss"
-                )
+#             for team in teams:
+#                 team_name = team.get("team_stats", {}).get("Team", "N/A")
+#                 team_score = team.get("team_stats", {}).get("Final Score", "N/A")
+#                 team_result = (
+#                     "Win"
+#                     if team.get("team_stats", {}).get("Team Win", "0") == "1"
+#                     else "Loss"
+#                 )
 
-                print(
-                    f"\nTeam: {team_name} | Score: {team_score} | Result: {team_result}"
-                )
+#                 print(
+#                     f"\nTeam: {team_name} | Score: {team_score} | Result: {team_result}"
+#                 )
 
-                players = team.get("players", [])
-                player_data = []
+#                 players = team.get("players", [])
+#                 player_data = []
 
-                for player in players:
-                    player_name = player.get("nickname", "N/A")
-                    k_d_ratio = player.get("player_stats", {}).get("K/D Ratio", "N/A")
-                    kills = player.get("player_stats", {}).get("Kills", "N/A")
-                    assists = player.get("player_stats", {}).get("Assists", "Ns/A")
-                    deaths = player.get("player_stats", {}).get("Deaths", "N/A")
-                    headshot_perc = player.get("player_stats", {}).get(
-                        "Headshots %", "N/A"
-                    )
+#                 for player in players:
+#                     player_name = player.get("nickname", "N/A")
+#                     k_d_ratio = player.get("player_stats", {}).get("K/D Ratio", "N/A")
+#                     kills = player.get("player_stats", {}).get("Kills", "N/A")
+#                     assists = player.get("player_stats", {}).get("Assists", "Ns/A")
+#                     deaths = player.get("player_stats", {}).get("Deaths", "N/A")
+#                     headshot_perc = player.get("player_stats", {}).get(
+#                         "Headshots %", "N/A"
+#                     )
 
-                    player_data.append(
-                        [
-                            player_name,
-                            k_d_ratio,
-                            kills,
-                            assists,
-                            deaths,
-                            f"{headshot_perc}%",
-                        ]
-                    )
+#                     player_data.append(
+#                         [
+#                             player_name,
+#                             k_d_ratio,
+#                             kills,
+#                             assists,
+#                             deaths,
+#                             f"{headshot_perc}%",
+#                         ]
+#                     )
 
-                headers = [
-                    "Player",
-                    "K/D Ratio",
-                    "Kills",
-                    "Assists",
-                    "Deaths",
-                    "Headshot %",
-                ]
-                print(
-                    tabulate(
-                        player_data,
-                        headers=headers,
-                        tablefmt="fancy_grid",
-                        stralign="right",
-                    )
-                )
-    else:
-        print(f"Error: {response.status_code}, {response.text}")
+#                 headers = [
+#                     "Player",
+#                     "K/D Ratio",
+#                     "Kills",
+#                     "Assists",
+#                     "Deaths",
+#                     "Headshot %",
+#                 ]
+#                 print(
+#                     tabulate(
+#                         player_data,
+#                         headers=headers,
+#                         tablefmt="fancy_grid",
+#                         stralign="right",
+#                     )
+#                 )
+#     else:
+#         print(f"Error: {response.status_code}, {response.text}")
 
 
-def choose_match(matches_data):
-    matches = matches_data.get("items", [])
+# def choose_match(matches_data):
+# """
+# User can choose which match to analyze further from the output of the match_stats function. After picking which one, this function goes into the lobby_stats function to display the statistics of a particular match of all the players.
+# """
+#     matches = matches_data.get("items", [])
 
-    if not matches:
-        print("No match statistics found.")
-        return
+#     if not matches:
+#         print("No match statistics found.")
+#         return
 
-    while True:
-        try:
-            choice = int(input("Choose a match number (1-{}): ".format(len(matches))))
-            if 1 <= choice <= len(matches):
-                selected_match = matches[choice - 1]
-                match_id = selected_match.get("stats", {}).get("Match Id", "N/A")
-                lobby_stats(match_id)
-                break
-            else:
-                print("Invalid choice. Please enter a valid number.")
-        except ValueError:
-            print("Invalid input. Please enter a number.")
+#     while True:
+#         try:
+#             choice = int(input("Choose a match number (1-{}): ".format(len(matches))))
+#             if 1 <= choice <= len(matches):
+#                 selected_match = matches[choice - 1]
+#                 match_id = selected_match.get("stats", {}).get("Match Id", "N/A")
+#                 lobby_stats(match_id)
+#                 break
+#             else:
+#                 print("Invalid choice. Please enter a valid number.")
+#         except ValueError:
+#             print("Invalid input. Please enter a number.")
 
 
 def main():
