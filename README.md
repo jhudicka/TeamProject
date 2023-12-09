@@ -1,4 +1,4 @@
-# FaceIt CS2 Match Statistic Project
+# Faceit CS2 Match Statistic Project
 ### Team members: Joey Hudicka and Ronald Liu Jr
 
 ## Project Overview
