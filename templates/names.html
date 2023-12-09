@@ -37,9 +37,8 @@
       <tr>
         <th>Nickname</th>
         <th>Player ID</th>
-        {% for player_data in players_data %}
       </tr>
-
+      {% for player_data in players_data %}
       <tr>
         <td>{{ player_data['nickname'] }}</td>
         <td>{{ player_data['player_id'] }}</td>
@@ -49,7 +48,7 @@
     <div class="center">
       <form action="/stats" method="post">
         <label for="player">Select Your Username:</label>
-        <select id="player" name="player">
+        <select id="player" name="player_id" required>
           {% for player in players %}
           <option value="{{ player['player_id'] }}">
             {{ player['nickname'] }}

@@ -1,74 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Player's Last Matches</title>
     <style>
-      h1 {
-        padding: 30px;
-        text-align: center;
-        background-color: #cd5a12;
-        color: white;
-      }
-      .center {
-        font-size: 1.1rem;
-        text-align: center;
-        width: auto;
-      }
-      table {
-        border-color: black;
-        padding: 2px 5px;
-        text-align: center;
-        font-size: 1.1rem;
-        cursor: pointer;
-        border-radius: 1.5px;
-        color: black;
-        margin-top: 10px;
-        align-self: center;
-        margin-right: auto;
-        margin-left: auto;
-      }
+        h1 {
+            padding: 30px;
+            text-align: center;
+            background-color: #cd5a12;
+            color: white;
+        }
+        .center {
+            font-size: 1.1rem;
+            text-align: center;
+            width: auto;
+        }
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin: 20px auto;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #cd5a12;
+            color: white;
+        }
     </style>
-  </head>
-  <body>
-    <h1>Player List</h1>
-    <!-- ... (other parts of your HTML) ... -->
-    <table border="1">
-      <tr>
-        <th>Nickname</th>
-        <th>Player ID</th>
-        <th>Matches Data</th>
-      </tr>
-      {% for match_item in matches_data %}
-      <tr>
-        <td>{{ match_item[0] }}</td>
-        <td>{{ match_item[1] }}</td>
-        <td>
-          <table border="1">
-            <tr>
-              <!-- Assuming match_item[2] is the headers list -->
-              {% for header in match_item[2] %}
-              <th>{{ header }}</th>
-              {% endfor %}
-            </tr>
-            {% for match_data in match_item[3] %}
-            <tr>
-              {% for item in match_data %}
-              <td>{{ item }}</td>
-              {% endfor %}
-            </tr>
+</head>
+<body>
+    <h1>Player's Last 10 Matches</h1>
+    <table>
+        <tr>
+            {% for header in matches_data['headers'] %}
+                <th>{{ header }}</th>
             {% endfor %}
-          </table>
-        </td>
-      </tr>
-      {% endfor %}
+        </tr>
+        {% for match_data in matches_data['matches_data'] %}
+            <tr>
+                {% for item in match_data %}
+                    <td>{{ item }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
     </table>
-      <!-- ... (other parts of your HTML) ... -->
     <div class="center">
-      <form action="/" method="get">
-        <button type="submit">Search Another Player</button>
-      </form>
+        <form action="/" method="get">
+            <button type="submit">Search Another Player</button>
+        </form>
     </div>
-  </body>
+    <div class="dropdown">
+      
+  </div>
+</body>
 </html>

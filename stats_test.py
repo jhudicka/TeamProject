@@ -107,6 +107,7 @@ def match_stats(data):
         return matches_data
 
     headers = [
+        "Day",
         "Map",
         "Result",
         "Score",
@@ -119,6 +120,12 @@ def match_stats(data):
 
     for index, match in enumerate(matches, start=1):
         stats = match.get("stats", {})
+        day = stats.get("Created At", "N/A")
+        if day != "N/A":
+            day = day.split("T")[0]  # Extract YYYY-MM-DD part
+            print(day)
+        else:
+            print("N/A")
         cs_map = stats.get("Map", "N/A")[3:].capitalize()
         result = stats.get("Result", "N/A")
         if result == "0":
@@ -134,6 +141,7 @@ def match_stats(data):
 
         matches_data.append(
             [
+                day,
                 cs_map,
                 result,
                 score,

@@ -46,18 +46,14 @@ def display_nicknames():
     return render_template("names.html", players_data=players, players=players)
 
 
-@app.route("/stats", methods=["GET", "POST"])
+@app.route("/stats", methods=["POST"])
 def last_matches():
+    player_id = request.form.get("player_id")
+    player_data = []
     matches_data = []
-
-    if request.method == "POST":
-        items = request.form.getlist("items")
-        print(items)
-        if items:
-            player_id = items[0].get("stats", {}).get("Player Id")
-            print("player id:", player_id)
-
-            if player_id:
+    
+    if player_id:
+        if player_id:
                 url = f"https://open.faceit.com/data/v4/players/{player_id}/games/cs2/stats"
                 headers = {
                     "accept": "application/json",
@@ -69,15 +65,13 @@ def last_matches():
                 response = requests.get(url, headers=headers, params=params)
 
                 if response.status_code == 200:
-                    data = response.json()
                     player_data = player_stats(player_id, limit)
-                    print(player_data)
-                    processed_data = match_stats(player_data)
-                    print(processed_data)
-                    matches_data = processed_data if processed_data else []
+                    matches_data = match_stats(player_data)
 
+        if not matches_data:
+            print("No match statistics found.")
+    print(matches_data)
     return render_template("matches.html", matches_data=matches_data)
-
 
 
 
